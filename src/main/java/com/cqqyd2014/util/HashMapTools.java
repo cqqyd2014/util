@@ -62,18 +62,28 @@ public class HashMapTools {
 	}
 	
 	
-	
+	/**
+	 * @Title: 链表对象变为map
+	 * @Description: 根据index和value，将链表提取为map，当index重复时，只取第一个
+	 * 
+	 * @return java.util.LinkedHashMap<String,String>
+	 * @param array_list
+	 *            传入的源数组对象
+	 * @param getIndexMethod
+	 *            用于得到Index字段的方法，反射机制使用，一般为"getA"
+	 * @param getValueMethod 用于得到value字段的方法
+	 */
 	
 	
 	
 	//根据数组中有多少个需要取得的对象统计数量
-	public static java.util.LinkedHashMap<String, java.math.BigDecimal> convertArrayToHashMapCount(Object[] array_list,String getIndexMethod) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static java.util.LinkedHashMap<String, java.math.BigDecimal> convertArrayListToHashMapCount(java.util.ArrayList<? extends Object> array_list,String getIndexMethod)  {
 
 		
 		LinkedHashMap<String,java.math.BigDecimal> map=new LinkedHashMap();
-		
-		for (int i=0;i<array_list.length;i++){
-			Object o=array_list[i];
+		try{
+		for (int i=0;i<array_list.size();i++){
+			Object o=array_list.get(i);
 			Class clazz = o.getClass();
 			 Method m1 = clazz.getDeclaredMethod(getIndexMethod);
 		        String index = (String) m1.invoke(o); 
@@ -84,32 +94,87 @@ public class HashMapTools {
 		        else {
 		        	map.put(index, count.add(new java.math.BigDecimal(1)));
 		        }
-		        
-		        
 		}
+		}
+		catch (NoSuchMethodException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListToHashMapCount，不能得到方法："+ex.toString());
+			
+			
+		}
+		catch (SecurityException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListToHashMapCount，SecurityException："+ex.toString());
+		}
+		catch (IllegalAccessException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListToHashMapCount，IllegalAccessException："+ex.toString());
+		}
+		catch (IllegalArgumentException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListToHashMapCount，IllegalArgumentException："+ex.toString());
+		}
+		catch (InvocationTargetException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListToHashMapCount，InvocationTargetException："+ex.toString());
+		} 
+		        
+		
        
 		return map;
 	}
 	
 	
+	
+	/**
+	 * @Title: 链表对象变为map
+	 * @Description: 根据index和value，将链表提取为map，当index重复时，只取第一个
+	 * 
+	 * @return java.util.LinkedHashMap<String,String>
+	 * @param array_list
+	 *            传入的源数组对象
+	 * @param getIndexMethod
+	 *            用于得到Index字段的方法，反射机制使用，一般为"getA"
+	 * @param getValueMethod 用于得到value字段的方法
+	 */
+	
+	
 	//把数组链表变为map
-	public static java.util.LinkedHashMap<String,String> convertArrayToHashMap(Object[] array_list,String getIndexMethod,String getValueMethod) throws Exception{
+	public static java.util.LinkedHashMap<String,String> convertArrayListToHashMap(java.util.ArrayList<? extends Object> array_list,String getIndexMethod,String getValueMethod)   {
 		
 		
-		LinkedHashMap<String,String> map=new LinkedHashMap();
+		LinkedHashMap<String,String> map=new LinkedHashMap<String, String>();
+
+try{
+	for (int i=0;i<array_list.size();i++){
+		Object o=array_list.get(i);
+		Class<? extends Object> clazz = o.getClass();
+		 Method m1 = clazz.getDeclaredMethod(getIndexMethod);
+	        String index = (String) m1.invoke(o); 
+	        Method m2 = clazz.getDeclaredMethod(getValueMethod);
+	        String value = (String) m2.invoke(o); 
+	        if (map.get(index)!=null){
+	        	//throw new Exception("ArrayList中Index的值重复");
+	        }
+	        map.put(index, value);
+	}
+}
+catch (NoSuchMethodException ex) {
+	System.out.println("出错在HashMapTools的convertArrayListToHashMap，不能得到方法："+ex.toString());
+	
+	
+}
+catch (SecurityException ex) {
+	System.out.println("出错在HashMapTools的convertArrayListToHashMap，SecurityException："+ex.toString());
+}
+catch (IllegalAccessException ex) {
+	System.out.println("出错在HashMapTools的convertArrayListToHashMap，IllegalAccessException："+ex.toString());
+}
+catch (IllegalArgumentException ex) {
+	System.out.println("出错在HashMapTools的convertArrayListToHashMap，IllegalArgumentException："+ex.toString());
+}
+catch (InvocationTargetException ex) {
+	System.out.println("出错在HashMapTools的convertArrayListToHashMap，InvocationTargetException："+ex.toString());
+}
+			
 		
-		for (int i=0;i<array_list.length;i++){
-			Object o=array_list[i];
-			Class clazz = o.getClass();
-			 Method m1 = clazz.getDeclaredMethod(getIndexMethod);
-		        String index = (String) m1.invoke(o); 
-		        Method m2 = clazz.getDeclaredMethod(getValueMethod);
-		        String value = (String) m2.invoke(o); 
-		        if (map.get(index)!=null){
-		        	throw new Exception("ArrayList中Index的值重复");
-		        }
-		        map.put(index, value);
-		}
+		
+		
        
 		return map;
 	}

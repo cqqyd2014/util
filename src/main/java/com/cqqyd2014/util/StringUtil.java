@@ -22,6 +22,9 @@ import sun.misc.BASE64Encoder;
 
 
 
+
+
+@SuppressWarnings("restriction")
 public class StringUtil {
 	
 	//String变为InputStream对象
@@ -83,13 +86,7 @@ public class StringUtil {
 		return msg;
 	}
 
-	public static String getLogisticsMemo(String str){
-		str=str.replaceAll("序号：", "（");
-		str=str.replaceAll(";型号:","）");
-		str=str.replaceAll(";数量：", "*");
-		str=str.replaceAll("厨刀", "厨具");
-		return str;
-	}
+
 	
 	
 	 public static String base64Encode(byte[] data){  
@@ -298,6 +295,43 @@ public class StringUtil {
 		byte[] b1 = Base64.decodeBase64(str); 
         return (new String(b1)); 
 	}
+	/**
+	 * @Title: 以数组方式存储的字符串变为字符串数组
+	 * @Description: “[a,b,c,d]”变为String[]
+	 * 
+	 * @return String[]
+	 * @param str
+	 *            传入的源数组对象
+	 * 
+	 */
+
+	
+
+	public static String[] convertToArray(String str) {
+		//是否以“[]”开头结尾
+		if (str.length()<2) {
+			return null;
+		}
+		
+		String head=str.substring(0, 1);
+		String tail=str.substring(str.length()-1, str.length());
+		if (head.equals("[")&&tail.equals("]")) {
+			if (str.length()==2) {
+				return null;
+			}
+			else {
+				return str.split(",");
+			}
+		}
+		else {
+			return null;
+		}
+		
+	}
+	
+	
+	
+	
 	
 	//来自顺丰的加密
 	public static String md5EncryptAndBase64(String str) {
@@ -315,7 +349,9 @@ public class StringUtil {
 	}
 
 	private static String encodeBase64(byte[] b) {
+		
 		sun.misc.BASE64Encoder base64Encode = new BASE64Encoder();
+		
 		String str = base64Encode.encode(b);
 		return str;
 	}
