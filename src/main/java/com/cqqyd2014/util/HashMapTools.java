@@ -46,11 +46,12 @@ public class HashMapTools {
 		
 	}
 	//将链表变为map,结构为<String ,java.match.BigDecimal>
-	public static java.util.LinkedHashMap<String, java.math.BigDecimal> convertArrayListStringNToMap(Object[] array_list,String getIndexMethod,String getValueMethod) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public static java.util.LinkedHashMap<String, java.math.BigDecimal> convertArrayListStringNToMap(java.util.ArrayList<? extends Object> array_list,String getIndexMethod,String getValueMethod) {
 		java.util.LinkedHashMap<String, java.math.BigDecimal> map=new java.util.LinkedHashMap<>();
-		for (int i=0;i<array_list.length;i++) {
-			Object o=array_list[i];
-			Class clazz = o.getClass();
+		try{
+			for (int i=0;i<array_list.size();i++) {
+			Object o=array_list.get(i);
+			Class<? extends Object> clazz = o.getClass();
 			 Method m1 = clazz.getDeclaredMethod(getIndexMethod);
 		        String index = (String) m1.invoke(o); 
 		    Method m2=clazz.getDeclaredMethod(getValueMethod);
@@ -58,6 +59,25 @@ public class HashMapTools {
 		    map.put(index, value);
 			
 		}
+		}
+		catch (NoSuchMethodException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListStringNToMap，不能得到方法："+ex.toString());
+			
+			
+		}
+		catch (SecurityException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListStringNToMap，SecurityException："+ex.toString());
+		}
+		catch (IllegalAccessException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListStringNToMap，IllegalAccessException："+ex.toString());
+		}
+		catch (IllegalArgumentException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListStringNToMap，IllegalArgumentException："+ex.toString());
+		}
+		catch (InvocationTargetException ex) {
+			System.out.println("出错在HashMapTools的convertArrayListStringNToMap，InvocationTargetException："+ex.toString());
+		} 
+		
 		return map;
 	}
 	
@@ -80,11 +100,11 @@ public class HashMapTools {
 	public static java.util.LinkedHashMap<String, java.math.BigDecimal> convertArrayListToHashMapCount(java.util.ArrayList<? extends Object> array_list,String getIndexMethod)  {
 
 		
-		LinkedHashMap<String,java.math.BigDecimal> map=new LinkedHashMap();
+		LinkedHashMap<String,java.math.BigDecimal> map=new LinkedHashMap<String,java.math.BigDecimal>();
 		try{
 		for (int i=0;i<array_list.size();i++){
 			Object o=array_list.get(i);
-			Class clazz = o.getClass();
+			Class<? extends Object> clazz = o.getClass();
 			 Method m1 = clazz.getDeclaredMethod(getIndexMethod);
 		        String index = (String) m1.invoke(o); 
 		        java.math.BigDecimal count=map.get(index);

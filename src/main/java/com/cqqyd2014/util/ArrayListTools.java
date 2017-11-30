@@ -150,14 +150,30 @@ public class ArrayListTools {
 
 	// 返回制定文本列的数组形式，比如“[a,b,c,d]”
 
-	public static String convertFieldsToArray(Object[] list, String get_field_method) throws NoSuchMethodException,
-			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static String convertFieldsToArray(java.util.ArrayList<? extends Object> list, String get_field_method) {
 		String rs = "[";
-		for (int i = 0; i < list.length; i++) {
-			Object o = list[i];
+		try {
+		for (int i = 0; i < list.size(); i++) {
+			Object o = list.get(i);
 			Class<? extends Object> clazz = o.getClass();
 			Method m1 = clazz.getDeclaredMethod(get_field_method);
 			rs = rs + (String) m1.invoke(o) + ",";
+		}
+		}
+		catch (NoSuchMethodException ex) {
+			System.out.println("出错在ArrayListTools的convertFieldsToArray，不能得到方法："+ex.toString());
+		}
+		catch (SecurityException ex) {
+			System.out.println("出错在ArrayListTools的convertFieldsToArray，SecurityException"+ex.toString());
+		}
+		catch (IllegalAccessException ex) {
+			System.out.println("出错在ArrayListTools的convertFieldsToArray，IllegalAccessException"+ex.toString());
+		}
+		catch (IllegalArgumentException ex) {
+			System.out.println("出错在ArrayListTools的convertFieldsToArray，IllegalArgumentException"+ex.toString());
+		}
+		catch (InvocationTargetException  ex) {
+			System.out.println("出错在ArrayListTools的convertFieldsToArray，InvocationTargetException"+ex.toString());
 		}
 		rs = rs.substring(0, rs.length() - 1);
 
@@ -183,8 +199,7 @@ public class ArrayListTools {
 
 	// 返回主键的计数
 	public static java.util.LinkedHashMap<String, java.math.BigDecimal> getKeyCount(java.util.ArrayList<? extends Object> list,
-			String get_key_method) throws NoSuchMethodException, SecurityException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
+			String get_key_method) {
 		java.util.LinkedHashMap<String, java.util.ArrayList<Object>> map_temp = convertArrayListToMapArrayList(list, get_key_method);
 		java.util.LinkedHashMap<String, java.math.BigDecimal> map = new java.util.LinkedHashMap<>();
 		for (Map.Entry<String, java.util.ArrayList<Object>> entry : map_temp.entrySet()) {
@@ -263,9 +278,9 @@ public class ArrayListTools {
 	 * 				具体的值是多少
 	 */
 	public static java.util.ArrayList<? extends Object> searchStringField(ArrayList<? extends Object> list, String get_field_method, String value)
-			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
+			{
 		java.util.ArrayList<? extends Object> os =list;
+		try {
 		for (int i = 0; i < list.size(); i++) {
 			Object o = list.get(i);
 			Class<? extends Object> clazz = o.getClass();
@@ -275,6 +290,23 @@ public class ArrayListTools {
 				os.remove(o);
 			}
 		}
+		
+			}
+	catch (NoSuchMethodException ex) {
+		System.out.println("出错在ArrayListTools的searchStringField，不能得到方法："+ex.toString());
+	}
+	catch (SecurityException ex) {
+		System.out.println("出错在ArrayListTools的searchStringField，SecurityException"+ex.toString());
+	}
+	catch (IllegalAccessException ex) {
+		System.out.println("出错在ArrayListTools的searchStringField，IllegalAccessException"+ex.toString());
+	}
+	catch (IllegalArgumentException ex) {
+		System.out.println("出错在ArrayListTools的searchStringField，IllegalArgumentException"+ex.toString());
+	}
+	catch (InvocationTargetException  ex) {
+		System.out.println("出错在ArrayListTools的searchStringField，InvocationTargetException"+ex.toString());
+	}
 		return os;
 	}
 	
@@ -296,16 +328,33 @@ public class ArrayListTools {
 	// 返回制定数值的累计数，数值列为java.math.BigDecimal
 
 	public static java.math.BigDecimal sumFields(java.util.ArrayList<? extends Object> list, String get_field_method)
-			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
+			{
 		java.math.BigDecimal rs = new java.math.BigDecimal(0);
+		try {
+			
+		
 		for (int i = 0; i < list.size(); i++) {
 			Object o = list.get(i);
 			Class<? extends Object> clazz = o.getClass();
 			Method m1 = clazz.getDeclaredMethod(get_field_method);
 			rs = rs.add((java.math.BigDecimal) m1.invoke(o));
 		}
-
+		}catch (NoSuchMethodException ex) {
+			System.out.println("出错在ArrayListTools的sumFields，不能得到方法："+ex.toString());
+		}
+		catch (SecurityException ex) {
+			System.out.println("出错在ArrayListTools的sumFields，SecurityException"+ex.toString());
+		}
+		catch (IllegalAccessException ex) {
+			System.out.println("出错在ArrayListTools的sumFields，IllegalAccessException"+ex.toString());
+		}
+		catch (IllegalArgumentException ex) {
+			System.out.println("出错在ArrayListTools的sumFields，IllegalArgumentException"+ex.toString());
+		}
+		catch (InvocationTargetException  ex) {
+			System.out.println("出错在ArrayListTools的sumFields，InvocationTargetException"+ex.toString());
+		}
+		
 		return rs;
 	}
 
@@ -327,12 +376,11 @@ public class ArrayListTools {
 	// 将商品ArrayList按照制定列分组，成为map
 
 	public static java.util.LinkedHashMap<String, java.util.ArrayList<Object>> convertArrayListToMapArrayList(java.util.ArrayList<? extends Object> list,
-			String get_key_method) throws NoSuchMethodException, SecurityException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
+			String get_key_method)  {
 
 		java.util.LinkedHashMap<String, java.util.ArrayList<Object>> map = new java.util.LinkedHashMap<>();
-
-		for (int i = 0; i < list.size(); i++) {
+try {
+	for (int i = 0; i < list.size(); i++) {
 			Object o = list.get(i);
 			Class<? extends Object> clazz = o.getClass();
 			Method m1 = clazz.getDeclaredMethod(get_key_method);
@@ -346,6 +394,22 @@ public class ArrayListTools {
 			map.put(key, sub_list);
 
 		}
+}catch (NoSuchMethodException ex) {
+	System.out.println("出错在ArrayListTools的convertArrayListToMapArrayList，不能得到方法："+ex.toString());
+}
+catch (SecurityException ex) {
+	System.out.println("出错在ArrayListTools的convertArrayListToMapArrayList，SecurityException"+ex.toString());
+}
+catch (IllegalAccessException ex) {
+	System.out.println("出错在ArrayListTools的convertArrayListToMapArrayList，IllegalAccessException"+ex.toString());
+}
+catch (IllegalArgumentException ex) {
+	System.out.println("出错在ArrayListTools的convertArrayListToMapArrayList，IllegalArgumentException"+ex.toString());
+}
+catch (InvocationTargetException  ex) {
+	System.out.println("出错在ArrayListTools的convertArrayListToMapArrayList，InvocationTargetException"+ex.toString());
+}
+		
 		return map;
 	}
 

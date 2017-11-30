@@ -1,6 +1,15 @@
 package com.cqqyd2014.util;
 
 public class AjaxSuccessMessage {
+	boolean auth_success;
+	
+
+	public boolean isAuth_success() {
+		return auth_success;
+	}
+	public void setAuth_success(boolean auth_success) {
+		this.auth_success = auth_success;
+	}
 
 	boolean isSuccess;
 	public boolean isSuccess() {

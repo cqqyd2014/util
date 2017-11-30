@@ -320,7 +320,7 @@ public class StringUtil {
 				return null;
 			}
 			else {
-				return str.split(",");
+				return str.substring(1,str.length()-1).split(",");
 			}
 		}
 		else {
