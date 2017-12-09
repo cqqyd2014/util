@@ -100,19 +100,7 @@ public class DateUtil {
 	}
 	
 
-	public static String ChineseDate(java.util.Date date)  {
-		if (getDistanceSecends(date,ShortStringToJDate("1970-1-1"))>0) {
-			SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月dd日 E", new Locale("zh", "CN"));
 
-			String s = df.format(date);
-			return s;
-		}
-		else {
-			return "";
-		}
-		
-
-	}
 
 
 	/*
@@ -188,7 +176,7 @@ public class DateUtil {
 		if (date==null){
 			return "";
 		}
-		if (date.equals(com.cqqyd2014.util.DateUtil.ShortStringToJDate("1900-01-01"))||date.equals(com.cqqyd2014.util.DateUtil.ShortStringToJDate("2999-12-31"))){
+		if (getDistanceSecends(date,com.cqqyd2014.util.DateUtil.ShortStringToJDate("1901-01-01"))<=0){
 			return "";
 		}
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
@@ -207,7 +195,7 @@ public class DateUtil {
 		if (date==null){
 			return "";
 		}
-		if (date.equals(com.cqqyd2014.util.DateUtil.ShortStringToJDate("1900-01-01"))||date.equals(com.cqqyd2014.util.DateUtil.ShortStringToJDate("2999-12-31"))){
+		if (getDistanceSecends(date,com.cqqyd2014.util.DateUtil.ShortStringToJDate("1901-01-01"))<=0){
 			return "";
 		}
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -237,6 +225,24 @@ public class DateUtil {
 
 		return s;
 	}
+	/*
+	 * 返回中文的短日期
+	 */
+
+	public static String getLocalShortString(java.util.Date dat) {
+		if (dat==null){
+			return "";
+		}
+		if (getDistanceSecends(dat,com.cqqyd2014.util.DateUtil.ShortStringToJDate("1901-01-01"))<=0){
+			return "";
+		}
+		// 返回结果为“2014-07-07 00:00:11”
+		java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy年MM月dd日", new Locale("zh", "CN"));
+		String s = format1.format(dat);
+
+		return s;
+	}
+	
 
 
 	/*
