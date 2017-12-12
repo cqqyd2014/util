@@ -9,13 +9,14 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.util.ServletContextAware;
 
-
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 
@@ -63,6 +64,7 @@ public abstract class PdfPrintAbstractAction extends ActionSupport implements Se
 	
 	public abstract String setJasperPath();
 	public abstract String setJasperFileName();
+	public abstract String setImagesPath();
 	
 	public InputStream getInputStream() {
 
@@ -80,7 +82,8 @@ public abstract class PdfPrintAbstractAction extends ActionSupport implements Se
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			// parameters.put("param_deliverbill", bill);
 			parameters.put("SUBREPORT_DIR", servletContext.getRealPath(setJasperPath()));
-			// parameters.put("IMAGES_DIR",servletContext.getRealPath("/jasper/package_list/"));
+
+			parameters.put("IMAGES_DIR",setImagesPath());
 			
 			
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(initializeBeanArray());

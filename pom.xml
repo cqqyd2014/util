@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.cqqyd2014</groupId>
 	<artifactId>util</artifactId>
-	<version>2</version>
+	<version>2-SNAPSHOT</version>
 	<name>Archetype - util</name>
 	<url>http://maven.apache.org</url>
 
@@ -27,12 +27,31 @@
 	<distributionManagement>
 		<repository>
 			<id>nexus</id>
-			<name>3rd_part_cqqyd2014</name>
-			<url>http://cqqyd2014.wicp.net:8082/repository/3rd_part_cqqyd2014/</url>
+			<name>3dr_part_cqqyd2014-snapshots</name>
+			<url>http://192.168.1.49:8082/repository/3dr_part_cqqyd2014-snapshots/</url>
 		</repository>
 
 	</distributionManagement>
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>5.5.12</version>
+</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.olap4j/olap4j -->
+<dependency>
+    <groupId>org.olap4j</groupId>
+    <artifactId>olap4j</artifactId>
+    <version>1.2.0</version>
+</dependency>
+	
+			<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.1</version>
+		</dependency>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
@@ -55,7 +74,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.cqqyd2014.font</groupId>
-			<artifactId>MsYh</artifactId>
+			<artifactId>MSYH</artifactId>
 			<version>1</version>
 		</dependency>
 		<dependency>

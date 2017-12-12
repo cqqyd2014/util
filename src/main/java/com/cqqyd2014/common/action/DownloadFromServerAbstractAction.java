@@ -5,13 +5,9 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-
-
 import com.opensymphony.xwork2.ActionSupport;
 
-
-
-public abstract class DownloadFromDBAbstractAction extends ActionSupport{
+public abstract class DownloadFromServerAbstractAction  extends ActionSupport{
 	/**
 	 * 
 	 */
