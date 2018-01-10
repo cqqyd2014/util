@@ -205,7 +205,32 @@ public class DateUtil {
 		return s;
 
 	}
+	public static String getPrintSimpleString(java.util.Date dat){
+		if (dat==null){
+			return "";
+		}
+		if (getDistanceSecends(dat,com.cqqyd2014.util.DateUtil.ShortStringToJDate("1901-01-01"))<=0){
+			return "";
+		}
+		// 返回结果为“2014-07-07 00:00:11”
+		java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd");
+		String s = format1.format(dat);
 
+		return s;
+	}
+	public static String getPrintFullString(java.util.Date dat){
+		if (dat==null){
+			return "";
+		}
+		if (getDistanceSecends(dat,com.cqqyd2014.util.DateUtil.ShortStringToJDate("1901-01-01"))<=0){
+			return "";
+		}
+		// 返回结果为“2014-07-07 00:00:11”
+		java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String s = format1.format(dat);
+
+		return s;
+	}
 
 
 	/*
@@ -216,7 +241,7 @@ public class DateUtil {
 		if (dat==null){
 			return "";
 		}
-		if (dat.equals(com.cqqyd2014.util.DateUtil.ShortStringToJDate("1900-01-01"))||dat.equals(com.cqqyd2014.util.DateUtil.ShortStringToJDate("2999-12-31"))){
+		if (getDistanceSecends(dat,com.cqqyd2014.util.DateUtil.ShortStringToJDate("1901-01-01"))<=0){
 			return "";
 		}
 		// 返回结果为“2014-07-07 00:00:11”
@@ -229,7 +254,7 @@ public class DateUtil {
 	 * 返回中文的短日期
 	 */
 
-	public static String getLocalShortString(java.util.Date dat) {
+	public static String getLocalSimpleString(java.util.Date dat) {
 		if (dat==null){
 			return "";
 		}

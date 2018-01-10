@@ -25,7 +25,126 @@ import sun.misc.BASE64Encoder;
 
 
 @SuppressWarnings("restriction")
-public class StringUtil {
+public final class StringUtil {
+	//数组变ArrayList
+	public static java.util.ArrayList<String> ArrayToArrayList(String[] str){
+		java.util.ArrayList<String> strs=new java.util.ArrayList<String>();
+		for (int i=0;i<str.length;i++) {
+			strs.add(str[i]);
+		}
+		return strs;
+	}
+	
+	//单个字符变为数组
+	public static java.util.ArrayList<String> toArrayList(String str){
+		java.util.ArrayList<String> strs=new java.util.ArrayList<String>();
+		strs.add(str);
+		return strs;
+	}
+	
+	
+	//根据hiernate的实体类属性得到get方法
+	public static String getMethod(String field){
+		if (field==null|| "".equals(field.trim())){
+			System.out.println("属性为空，不能得到get方法名称");
+			return null;
+		}
+		String first=field.substring(0,1);
+		return "get"+first.toUpperCase()+field.substring(1,field.length());
+	}
+	
+	
+	public static final char UNDERLINE = '_';
+
+    /**
+     * 驼峰格式字符串转换为下划线格式字符串
+     * 
+     * @param param
+     * @return
+     */
+    public static String camelToUnderline(String param) {
+        if (param == null || "".equals(param.trim())) {
+            return "";
+        }
+        int len = param.length();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            char c = param.charAt(i);
+            if (Character.isUpperCase(c)) {
+                sb.append(UNDERLINE);
+                sb.append(Character.toLowerCase(c));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 下划线格式字符串转换为驼峰格式字符串
+     * 
+     * @param param
+     * @return
+     */
+    public static String underlineToCamel(String param) {
+        if (param == null || "".equals(param.trim())) {
+            return "";
+        }
+        int len = param.length();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            char c = param.charAt(i);
+            if (c == UNDERLINE) {
+                if (++i < len) {
+                    sb.append(Character.toUpperCase(param.charAt(i)));
+                }
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+	
+	
+	
+	//清理字符串，银行用得多
+	public static String cleanToString(String str){
+		if (str==null){
+			return "";
+		}
+		str=str.trim();
+		if (str.equals("NULL")){
+			return "";
+		}
+		if (str.equals("null")){
+			return "";
+		}
+		return str;
+	}
+	//清理字符串为数字
+	public static java.math.BigDecimal cleanToDec(String str){
+		str=cleanToString(str);
+		if (str.equals("")){
+			return new java.math.BigDecimal(0);
+		}
+		else{
+			return new java.math.BigDecimal(str);
+		}
+	}
+	//清理字符串为日期型
+	public static java.util.Date cleanToDate(String str){
+		//System.out.println(str);
+		if (str.equals(" 00:00:00")){
+			return com.cqqyd2014.util.DateUtil.ShortStringToJDate("1900-1-1");
+		}
+		str=cleanToString(str);
+		if (str.equals("")){
+			return com.cqqyd2014.util.DateUtil.ShortStringToJDate("1900-1-1");
+		}
+		else{
+			return com.cqqyd2014.util.DateUtil.FullStringToJDate(str);
+		}
+	}
 	
 	//String变为InputStream对象
 	public static InputStream toInputStream(String str) throws UnsupportedEncodingException{
@@ -48,6 +167,7 @@ public class StringUtil {
 		
 		return list;
 	}
+	
 	
 	public StringUtilIndexesOfChar whoIsFirst(String source,String[] flags){
 		if (source.length()==0||flags.length==0){
@@ -222,69 +342,7 @@ public class StringUtil {
 		 UUID uuid = UUID.randomUUID();
 		 return uuid.toString();
 	}
-	//单个字符变为数组
-	public static java.util.ArrayList<String> toArrayList(String str){
-		java.util.ArrayList<String> strs=new java.util.ArrayList<String>();
-		strs.add(str);
-		return strs;
-	}
-	//数组变ArrayList
-	public static java.util.ArrayList<String> ArrayToArrayList(String[] str){
-		java.util.ArrayList<String> strs=new java.util.ArrayList<String>();
-		for (int i=0;i<str.length;i++) {
-			strs.add(str[i]);
-		}
-		return strs;
-	}
-	public static int indexOfArray(java.util.ArrayList<String> strs,String str) {
-		String[] strs2=arrayListToArray(strs);
-		
-		for (int i=0;i<strs2.length;i++) {
-			if (strs2[i].equals(str)) {
-				return i;
-			}
-		}
-				return -1;
-	}
-	public static String[] arrayListToArray(java.util.ArrayList<String> strs) {
-		String[] str=new String[strs.size()];
-		for (int i=0;i<strs.size();i++) {
-			str[i]=strs.get(i);
-		}
-		
-		return str;
-	}
-	//将字符串链表变为SQL语句的in字符串
-	public static String arrayListToSQLInString(ArrayList<String> rs) {
-		String str="(";
-		for (int i=0;i<rs.size()-1;i++){
-			str=str+"\'"+rs.get(i)+"\',";
-		}
-		str=str+"\'"+rs.get(rs.size()-1)+"\'";
-		return str+")";
-		
-	}
-	//将数值链表变为SQL语句的in字符串
-		public static String arrayListToSQLInInt(ArrayList<String> rs) {
-			String str="(";
-			for (int i=0;i<rs.size()-1;i++){
-				str=str+rs.get(i)+",";
-			}
-			str=str+rs.get(rs.size()-1);
-			return str+")";
-		}
-	
 
-	//字符串数组变为逗号分隔符
-	public static String arrayListToDotString(ArrayList<String> rs) {
-		
-		String str="";
-		for (int i=0;i<rs.size()-1;i++){
-			str=str+rs.get(i)+",";
-		}
-		str=str+rs.get(rs.size()-1);
-		return str;
-	}
 	
 	public static String base64encode(String str) {
 		byte[] b = Base64.encodeBase64(str.getBytes(), true); 

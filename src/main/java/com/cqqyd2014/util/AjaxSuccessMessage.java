@@ -2,8 +2,15 @@ package com.cqqyd2014.util;
 
 public class AjaxSuccessMessage {
 	boolean auth_success;
+	boolean boolean_flag;
 	
 
+	public boolean isBoolean_flag() {
+		return boolean_flag;
+	}
+	public void setBoolean_flag(boolean boolean_flag) {
+		this.boolean_flag = boolean_flag;
+	}
 	public boolean isAuth_success() {
 		return auth_success;
 	}

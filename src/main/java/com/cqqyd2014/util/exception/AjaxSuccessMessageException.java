@@ -6,19 +6,34 @@ public class AjaxSuccessMessageException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public AjaxSuccessMessageException(String messageString) {
-		super();
-		this.messageString = messageString;
+	public AjaxSuccessMessageException(String message,Object o1) {
+		super(message);
+		
+		this.o1=o1;
+	}
+	
+
+	
+
+	
+
+	public AjaxSuccessMessageException(String message) {
+		// TODO Auto-generated constructor stub
+		super(message);
 	}
 
-	String messageString;
 
-	public String getMessageString() {
-		return messageString;
+
+
+
+
+	Object o1;
+
+	public Object getO1() {
+		return o1;
 	}
 
-	public void setMessageString(String messageString) {
-		this.messageString = messageString;
+	public void setO1(Object o1) {
+		this.o1 = o1;
 	}
-
 }

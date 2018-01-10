@@ -1,5 +1,6 @@
 package com.cqqyd2014.util;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -8,6 +9,58 @@ import java.util.Map;
 
 
 public class ArrayListTools {
+	
+
+
+	public static int indexOfArrayList(java.util.ArrayList<String> strs,String str) {
+		String[] strs2=arrayListToArray(strs);
+		
+		for (int i=0;i<strs2.length;i++) {
+			if (strs2[i].equals(str)) {
+				return i;
+			}
+		}
+				return -1;
+	}
+	public static String[] arrayListToArray(java.util.ArrayList<String> strs) {
+		String[] str=new String[strs.size()];
+		for (int i=0;i<strs.size();i++) {
+			str[i]=strs.get(i);
+		}
+		
+		return str;
+	}
+	//将字符串链表变为SQL语句的in字符串
+	public static String arrayListToSQLInString(ArrayList<String> rs) {
+		String str="(";
+		for (int i=0;i<rs.size()-1;i++){
+			str=str+"\'"+rs.get(i)+"\',";
+		}
+		str=str+"\'"+rs.get(rs.size()-1)+"\'";
+		return str+")";
+		
+	}
+	//将数值链表变为SQL语句的in字符串
+		public static String arrayListToSQLInInt(ArrayList<String> rs) {
+			String str="(";
+			for (int i=0;i<rs.size()-1;i++){
+				str=str+rs.get(i)+",";
+			}
+			str=str+rs.get(rs.size()-1);
+			return str+")";
+		}
+	
+
+	//字符串数组变为逗号分隔符
+	public static String arrayListToDotString(ArrayList<String> rs) {
+		
+		String str="";
+		for (int i=0;i<rs.size()-1;i++){
+			str=str+rs.get(i)+",";
+		}
+		str=str+rs.get(rs.size()-1);
+		return str;
+	}
 	
 	
 	
@@ -113,51 +166,38 @@ public class ArrayListTools {
 	
 	
 	
-	/**
-	 * @Title: 数组变为数组链表
-	 * @Description: “[a,b,c,d]”变为ArrayList
-	 * 
-	 * @return java.util.Array<String>
-	 * @param str
-	 *            传入的源数组对象
-	 * 
-	 */
-
-	
-
-	public static java.util.ArrayList<String> convertArrayToArrayList(String[] str) {
-		java.util.ArrayList<String> str_array=new java.util.ArrayList<String>();
-		for (int i=0;i<str.length;i++) {
-			str_array.add(str[i]);
-		}
-
-		return str_array;
-	}
 	
 	
 	
 
+	
 	/**
 	 * @Title: 数组对象提取属性为数组
 	 * @Description: 将数组对象的某一个属性列提取为数组，比如“[a,b,c,d]”
 	 * 
-	 * @return String
+	 * @return Object，使用的时候将其转换为
 	 * @param list
 	 *            传入的源数组对象
 	 * @param get_field_method
 	 *            用于得到字段的方法，反射机制使用，一般为"getA"
+	 *            
+	 *@parma clazz
+	 *			该字段的数据类型
 	 */
 
 	// 返回制定文本列的数组形式，比如“[a,b,c,d]”
 
-	public static String convertFieldsToArray(java.util.ArrayList<? extends Object> list, String get_field_method) {
-		String rs = "[";
+	public static Object convertFieldsToArray(java.util.ArrayList<? extends Object> list, String get_field_method,Class<? extends Object> clazz) {
+		int len=list.size();
+		Object  array = Array.newInstance(clazz, len);
 		try {
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < len; i++) {
 			Object o = list.get(i);
-			Class<? extends Object> clazz = o.getClass();
-			Method m1 = clazz.getDeclaredMethod(get_field_method);
-			rs = rs + (String) m1.invoke(o) + ",";
+			Class<? extends Object> list_clazz = o.getClass();
+			Method m1 = list_clazz.getDeclaredMethod(get_field_method);
+			
+			
+			Array.set(array, i,  m1.invoke(o));  
 		}
 		}
 		catch (NoSuchMethodException ex) {
@@ -175,11 +215,9 @@ public class ArrayListTools {
 		catch (InvocationTargetException  ex) {
 			System.out.println("出错在ArrayListTools的convertFieldsToArray，InvocationTargetException"+ex.toString());
 		}
-		rs = rs.substring(0, rs.length() - 1);
+		
 
-		rs = rs + "]";
-
-		return rs;
+		return array;
 	}
 	
 	

@@ -37,6 +37,7 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 			// 从session里取得当前的用户
 			String user_id = (String) ServletActionContext.getRequest().getSession().getAttribute("user_id");
 			if (user_id == null||user_id .equals("")) {
+				
 				return error_url;
 			}
 			// 取到权限
@@ -51,7 +52,8 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 				return invocation.invoke();
 			}
 			// 将权限变为数组
-			java.util.ArrayList<String> privilege_array = com.cqqyd2014.util.ArrayListTools
+			@SuppressWarnings("unchecked")
+			java.util.ArrayList<String> privilege_array = (java.util.ArrayList<String>)com.cqqyd2014.util.ArrayTools
 					.convertArrayToArrayList(com.cqqyd2014.util.StringUtil.convertToArray(privilege));
 			// 两个ArrayList取交集
 			privilege_array.retainAll(menu_array);
@@ -68,6 +70,7 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 				//System.out.println("ok");
 				return invocation.invoke();
 			} else {
+				
 				return error_url;
 			}
 
