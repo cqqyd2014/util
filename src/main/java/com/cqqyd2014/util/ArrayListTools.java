@@ -10,6 +10,33 @@ import java.util.Map;
 
 public class ArrayListTools {
 	
+	
+	
+	@SuppressWarnings("unchecked")
+	public static  java.util.ArrayList<String> getStringFieldArrayList(
+			java.util.ArrayList<? extends Object> arraylist,@SuppressWarnings("rawtypes") Class clazz,String getMethod){
+		java.util.ArrayList<String> strs=new java.util.ArrayList<>();
+		Method method=null;
+		try {
+			
+			method=clazz.getDeclaredMethod(getMethod);
+		} catch (NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i=0,len=arraylist.size();i<len;i++){
+			Object o=arraylist.get(i);
+			try {
+				strs.add((String)method.invoke(o));
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return strs;
+		
+	}
+	
 
 
 	public static int indexOfArrayList(java.util.ArrayList<String> strs,String str) {
