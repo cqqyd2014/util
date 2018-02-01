@@ -1,5 +1,8 @@
 package com.cqqyd2014.common.hibernate;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -7,8 +10,19 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public abstract class GetModelFromEntityViewDAO<T> extends ActionSupport{
 	
+	@Resource(name="ds")
+	private DataSource ds;
 	
 	
+	
+	public DataSource getDs() {
+		return ds;
+	}
+
+	public void setDs(DataSource ds) {
+		this.ds = ds;
+	}
+
 	/**
 	 * 
 	 */

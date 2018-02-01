@@ -3,6 +3,25 @@ package com.cqqyd2014.util;
 public class ArrayTools {
 	
 	
+	
+	/**
+	 * @Title: 数组对象去重复
+	 * @Description: String等具有equals()的对象，支持以下，String、Double、Float、Long、Integer、Short、Byte、、Boolean、BigDecimal、BigInteger
+	 * 
+	 * @return Object[]
+	 * @param Object[]
+	 *            传入的源数组对象
+	 * 
+	 */
+	
+	public static Object[] eliminateDuplicates(Object[] os){
+		
+		java.util.ArrayList<? extends Object> os_list=convertArrayToArrayList(os);
+		java.util.ArrayList<? extends Object> os_list_new=com.cqqyd2014.util.ArrayListTools.eliminateDuplicates(os_list);
+		return com.cqqyd2014.util.ArrayListTools.arrayListToArray(os_list_new);
+	}
+	
+	
 
 	/**
 	 * @Title: 数组变为数组链表

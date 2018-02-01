@@ -37,6 +37,7 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 			// 从session里取得当前的用户
 			String user_id = (String) ServletActionContext.getRequest().getSession().getAttribute("user_id");
 			if (user_id == null||user_id .equals("")) {
+				//System.out.println("fanhui1");
 				
 				return error_url;
 			}
@@ -70,6 +71,7 @@ public class AuthorityInterceptor extends AbstractInterceptor {
 				//System.out.println("ok");
 				return invocation.invoke();
 			} else {
+				System.out.println("fanhui2");
 				
 				return error_url;
 			}

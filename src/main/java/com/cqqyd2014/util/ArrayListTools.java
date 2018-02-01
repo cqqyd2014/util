@@ -9,6 +9,25 @@ import java.util.Map;
 
 
 public class ArrayListTools {
+	/**
+	 * @Title: 数组对象去重复
+	 * @Description: String等具有equals()的对象，支持以下，String、Double、Float、Long、Integer、Short、Byte、、Boolean、BigDecimal、BigInteger
+	 * 
+	 * @return Object[]
+	 * @param Object[]
+	 *            传入的源数组对象
+	 * 
+	 */
+	public static java.util.ArrayList<? extends Object> eliminateDuplicates(java.util.ArrayList<? extends Object> os){
+		java.util.ArrayList<Object> os_new =new java.util.ArrayList<>();
+		for (int i=0,len=os.size();i<len;i++){
+			
+			if (os_new.indexOf(os.get(i))==-1){
+				os_new.add(os.get(i));
+			}
+		}
+		return os_new;
+	}
 	
 	
 	
@@ -37,20 +56,9 @@ public class ArrayListTools {
 		
 	}
 	
-
-
-	public static int indexOfArrayList(java.util.ArrayList<String> strs,String str) {
-		String[] strs2=arrayListToArray(strs);
-		
-		for (int i=0;i<strs2.length;i++) {
-			if (strs2[i].equals(str)) {
-				return i;
-			}
-		}
-				return -1;
-	}
-	public static String[] arrayListToArray(java.util.ArrayList<String> strs) {
-		String[] str=new String[strs.size()];
+	
+	public static Object[] arrayListToArray(java.util.ArrayList<? extends Object> strs) {
+		Object[] str=new Object[strs.size()];
 		for (int i=0;i<strs.size();i++) {
 			str[i]=strs.get(i);
 		}

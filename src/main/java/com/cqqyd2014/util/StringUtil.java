@@ -26,6 +26,11 @@ import sun.misc.BASE64Encoder;
 
 @SuppressWarnings("restriction")
 public final class StringUtil {
+	
+	
+	
+	
+	
 	//数组变ArrayList
 	public static java.util.ArrayList<String> ArrayToArrayList(String[] str){
 		java.util.ArrayList<String> strs=new java.util.ArrayList<String>();
